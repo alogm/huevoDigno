@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huevo Digno - Red de Aves Comunitaria</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind Config for Custom Colors extracted from the logo -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            terracotta: '#C56B46',
+                            green: '#2A4C3B',
+                            yellow: '#F3A738',
+                            cream: '#F9F8F3',
+                            creamDark: '#EAE7DE'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #F9F8F3; }
+        ::-webkit-scrollbar-thumb { background: #C56B46; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2A4C3B; }
+
+        /* Carousel 1 (Hero Fade) Animations */
+        .hero-slide {
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        /* Carousel 2 (Gallery Slide) */
+        .gallery-container {
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+        }
+        .gallery-container::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        .gallery-item {
+            scroll-snap-align: start;
+        }
+
+        /* Fade-in Animation on Scroll */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-brand-cream text-gray-800 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-brand-cream/95 backdrop-blur-sm shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <img class="h-16 w-auto object-contain rounded-full border-2 border-brand-green" src="Gemini_Generated_Image_jxhnvnjxhnvnjxhn.png" alt="Logo Huevo Digno" onerror="this.src='https://images.unsplash.com/photo-1598935838597-48f572a818ec?auto=format&fit=crop&w=100&q=80'">
+                    <span class="font-bold text-xl md:text-2xl text-brand-green uppercase tracking-wide">Huevo Digno</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#inicio" class="text-brand-green hover:text-brand-terracotta font-medium transition">Inicio</a>
+                    <a href="#nosotros" class="text-brand-green hover:text-brand-terracotta font-medium transition">El Proyecto</a>
+                    <a href="#modelo" class="text-brand-green hover:text-brand-terracotta font-medium transition">Modelo</a>
+                    <a href="#impacto" class="text-brand-green hover:text-brand-terracotta font-medium transition">Impacto</a>
+                    <a href="#contacto" class="bg-brand-terracotta text-white px-6 py-2 rounded-full hover:bg-brand-green transition shadow-md">Únete</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-green hover:text-brand-terracotta focus:outline-none">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-cream border-t border-brand-creamDark absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#inicio" class="block px-3 py-2 text-brand-green font-medium">Inicio</a>
+                <a href="#nosotros" class="block px-3 py-2 text-brand-green font-medium">El Proyecto</a>
+                <a href="#modelo" class="block px-3 py-2 text-brand-green font-medium">Modelo</a>
+                <a href="#impacto" class="block px-3 py-2 text-brand-green font-medium">Impacto</a>
+                <a href="#contacto" class="block mt-4 text-center bg-brand-terracotta text-white px-6 py-3 rounded-full font-medium">Únete a la Red</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Carousel 1 (Background Crossfade) -->
+    <header id="inicio" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Slides -->
+        <div id="hero-carousel" class="absolute inset-0 z-0 bg-brand-green">
+            <div class="hero-slide absolute inset-0 opacity-100 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1548550023-2bf3c49b338c?auto=format&fit=crop&w=1920&q=80');">
+                <div class="absolute inset-0 bg-brand-green/60"></div>
+            </div>
+            <div class="hero-slide absolute inset-0 opacity-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1598935838597-48f572a818ec?auto=format&fit=crop&w=1920&q=80');">
+                <div class="absolute inset-0 bg-brand-green/60"></div>
+            </div>
+            <div class="hero-slide absolute inset-0 opacity-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=1920&q=80');">
+                <div class="absolute inset-0 bg-brand-green/60"></div>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-yellow/20 text-brand-yellow border border-brand-yellow mb-4 text-sm font-semibold tracking-wider uppercase">Red Comunitaria</span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+                Alimento fresco, <br> <span class="text-brand-yellow">Impacto social</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-10 font-light">
+                Organizamos una red comunitaria para producir, acopiar, clasificar, empacar y distribuir huevo fresco de gallina, empoderando a familias rurales.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#modelo" class="bg-brand-terracotta text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-brand-terracotta transition-colors shadow-lg">Descubre Nuestro Modelo</a>
+                <a href="#contacto" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-brand-green transition-colors">Apoya el Proyecto</a>
+            </div>
+        </div>
+
+        <!-- Custom Shape Divider -->
+        <div class="absolute bottom-0 w-full overflow-hidden leading-none z-10">
+            <svg class="relative block w-full h-12 md:h-24" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.34,196.38,108.99,239.9,102.13,281.36,81.33,321.39,56.44Z" fill="#F9F8F3"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Nosotros / Problema y Solución -->
+    <section id="nosotros" class="py-20 md:py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="fade-in-up">
+                    <h2 class="text-brand-terracotta font-semibold tracking-wider uppercase mb-2">La Problemática</h2>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold text-brand-green mb-6">¿Qué problema deseamos eliminar?</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Buscamos disminuir la exclusión económica de pequeños productores rurales que tienen capacidad para producir huevo, pero venden de forma aislada, sin marca y sin canales constantes. Esta situación limita sus ingresos y deja el valor en intermediarios.
+                    </p>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        También atendemos el acceso comunitario a alimentos frescos. En muchas localidades, depender de productos externos eleva precios y debilita la economía local.
+                    </p>
+                    
+                    <div class="bg-white p-6 rounded-2xl border-l-4 border-brand-yellow shadow-md">
+                        <h4 class="font-bold text-brand-green mb-2 flex items-center gap-2">
+                            <i class="ph-fill ph-target text-brand-yellow text-xl"></i> Nuestra Misión
+                        </h4>
+                        <p class="text-sm text-gray-600 italic">
+                            "Generar ingresos dignos para productores rurales mediante una red organizada de producción y comercialización de huevo fresco, fortaleciendo el consumo local y el bienestar comunitario."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative fade-in-up" style="transition-delay: 200ms;">
+                    <img src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=800&q=80" alt="Agricultor rural" class="rounded-3xl shadow-2xl object-cover w-full h-[500px]">
+                    <div class="absolute -bottom-8 -left-8 bg-brand-green text-white p-6 rounded-2xl shadow-xl max-w-xs hidden md:block">
+                        <p class="font-serif font-bold text-xl mb-1">+ Dignidad</p>
+                        <p class="text-sm text-brand-cream/80">Creamos oportunidades permanentes de ingreso y acceso a alimentos frescos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Propuesta de Valor -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-brand-terracotta font-semibold tracking-wider uppercase mb-2">Promesa de Valor</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-brand-green mb-6">Ofrecemos huevo fresco, local y a precio justo</h3>
+                <p class="text-gray-600">Al mismo tiempo que generamos oportunidades de ingreso para pequeños productores rurales integrados a una red organizada y confiable.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-brand-cream rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 border border-brand-creamDark shadow-sm fade-in-up" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-brand-terracotta/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph ph-farm text-3xl text-brand-terracotta"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-green mb-3">Productores Rurales</h4>
+                    <p class="text-gray-600 mb-4 text-sm">Capacitación, canal de venta, mejores precios y mayor estabilidad comercial.</p>
+                    <div class="pt-4 border-t border-gray-200">
+                        <p class="text-sm font-semibold text-brand-terracotta flex items-center gap-2">
+                            <i class="ph-fill ph-check-circle"></i> Ingreso constante
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-brand-cream rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 border border-brand-creamDark shadow-sm fade-in-up" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-brand-yellow/20 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph ph-shopping-cart text-3xl text-brand-yellow"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-green mb-3">Consumidores Locales</h4>
+                    <p class="text-gray-600 mb-4 text-sm">Huevo fresco, trazable, cercano y con precio justo para hogares y negocios (tiendas, fondas).</p>
+                    <div class="pt-4 border-t border-gray-200">
+                        <p class="text-sm font-semibold text-brand-yellow flex items-center gap-2">
+                            <i class="ph-fill ph-check-circle"></i> Confianza en el origen
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-brand-cream rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 border border-brand-creamDark shadow-sm fade-in-up" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-brand-green/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph ph-users-three text-3xl text-brand-green"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand-green mb-3">La Comunidad</h4>
+                    <p class="text-gray-600 mb-4 text-sm">Economía circular, empleo local y participación activa de grupos vulnerables.</p>
+                    <div class="pt-4 border-t border-gray-200">
+                        <p class="text-sm font-semibold text-brand-green flex items-center gap-2">
+                            <i class="ph-fill ph-check-circle"></i> Bienestar y redes fuertes
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel 2: Galería de la Red Comunitaria -->
+    <section class="py-20 bg-brand-green text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 fade-in-up">
+                <div>
+                    <h2 class="text-brand-yellow font-semibold tracking-wider uppercase mb-2">Nuestra Comunidad</h2>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold">La red en acción</h3>
+                </div>
+                <div class="flex gap-4">
+                    <button id="prev-gallery" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-green transition-colors focus:outline-none">
+                        <i class="ph ph-arrow-left text-xl"></i>
+                    </button>
+                    <button id="next-gallery" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-green transition-colors focus:outline-none">
+                        <i class="ph ph-arrow-right text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Slider -->
+        <div class="pl-4 sm:pl-6 lg:pl-8 mx-auto pb-8 fade-in-up">
+            <div id="gallery-track" class="flex gap-6 overflow-x-auto gallery-container pb-8 pt-4">
+                
+                <!-- Item 1 -->
+                <div class="gallery-item relative flex-shrink-0 w-[280px] md:w-[400px] rounded-2xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=500&q=80" alt="Capacitación" class="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="bg-brand-terracotta text-xs font-bold px-2 py-1 rounded mb-2 inline-block">1. Capacitación</span>
+                        <h4 class="text-xl font-bold">Manejo Básico</h4>
+                        <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Talleres sobre manejo de gallinas, bioseguridad y recolección.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="gallery-item relative flex-shrink-0 w-[280px] md:w-[400px] rounded-2xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=500&q=80" alt="Acopio" class="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="bg-brand-yellow text-brand-green text-xs font-bold px-2 py-1 rounded mb-2 inline-block">2. Acopio</span>
+                        <h4 class="text-xl font-bold">Revisión y Empaque</h4>
+                        <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Recolección programada, revisión de limpieza y frescura.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="gallery-item relative flex-shrink-0 w-[280px] md:w-[400px] rounded-2xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=500&q=80" alt="Distribución" class="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="bg-brand-cream text-brand-green text-xs font-bold px-2 py-1 rounded mb-2 inline-block">3. Distribución</span>
+                        <h4 class="text-xl font-bold">Entrega Local</h4>
+                        <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Rutas de reparto en comunidades y puntos de venta.</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="gallery-item relative flex-shrink-0 w-[280px] md:w-[400px] rounded-2xl overflow-hidden group">
+                    <img src="https://images.unsplash.com/photo-1628258334105-2a0b3d6efee1?auto=format&fit=crop&w=500&q=80" alt="Consumo" class="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="bg-brand-terracotta text-xs font-bold px-2 py-1 rounded mb-2 inline-block">4. Consumo</span>
+                        <h4 class="text-xl font-bold">Alimento Fresco</h4>
+                        <p class="text-sm text-gray-300 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">Familias, fondas y panaderías con ingredientes locales.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Modelo de Ingresos -->
+    <section id="modelo" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+                <h2 class="text-brand-terracotta font-semibold tracking-wider uppercase mb-2">Modelo de Negocio</h2>
+                <h3 class="text-3xl md:text-4xl font-serif font-bold text-brand-green mb-6">Alternativas de Pago e Intercambio</h3>
+                <p class="text-gray-600">Un modelo sostenible que no depende de donativos. Generamos recursos para productores, operaciones y crecimiento de la red.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Revenue Model 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-brand-terracotta transition-colors fade-in-up">
+                    <div class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mb-4 text-brand-terracotta">
+                        <i class="ph ph-basket text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-brand-green mb-2">Venta Directa</h4>
+                    <p class="text-sm text-gray-500 mb-3">Familias de la comunidad.</p>
+                    <p class="text-sm text-gray-700 bg-brand-cream p-2 rounded">Venta por docena o cono (Efectivo o digital).</p>
+                </div>
+
+                <!-- Revenue Model 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-brand-yellow transition-colors fade-in-up" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mb-4 text-brand-yellow">
+                        <i class="ph ph-storefront text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-brand-green mb-2">Mayoreo</h4>
+                    <p class="text-sm text-gray-500 mb-3">Tiendas, fondas y panaderías.</p>
+                    <p class="text-sm text-gray-700 bg-brand-cream p-2 rounded">Pago semanal o mensual según convenio.</p>
+                </div>
+
+                <!-- Revenue Model 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-brand-green transition-colors fade-in-up" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mb-4 text-brand-green">
+                        <i class="ph ph-calendar-check text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-brand-green mb-2">Suscripción</h4>
+                    <p class="text-sm text-gray-500 mb-3">Hogares y pequeños negocios.</p>
+                    <p class="text-sm text-gray-700 bg-brand-cream p-2 rounded">Pago anticipado con entrega programada.</p>
+                </div>
+
+                <!-- Revenue Model 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:border-brand-terracotta transition-colors fade-in-up" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center mb-4 text-brand-terracotta">
+                        <i class="ph ph-arrows-left-right text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-brand-green mb-2">Intercambio</h4>
+                    <p class="text-sm text-gray-500 mb-3">Productores o aliados locales.</p>
+                    <p class="text-sm text-gray-700 bg-brand-cream p-2 rounded">Trueque por alimento de aves, cartones o transporte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impacto y Escalabilidad -->
+    <section id="impacto" class="py-20 bg-brand-creamDark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in-up">
+                    <h2 class="text-brand-terracotta font-semibold tracking-wider uppercase mb-2">Crecimiento</h2>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold text-brand-green mb-6">Escalabilidad Proyectada</h3>
+                    <p class="text-gray-600 mb-8">Un modelo diseñado por etapas para beneficiar a más personas sin perder calidad ni sentido social.</p>
+                    
+                    <div class="space-y-6">
+                        <!-- Step 1 -->
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-brand-terracotta text-white flex items-center justify-center font-bold text-sm shrink-0">1</div>
+                                <div class="w-0.5 h-full bg-gray-300 my-2"></div>
+                            </div>
+                            <div class="pb-4">
+                                <h4 class="font-bold text-brand-green text-lg">Piloto Local <span class="text-sm font-normal text-gray-500 ml-2">(0 a 3 meses)</span></h4>
+                                <p class="text-sm text-gray-600 mt-1">Integrar 5 a 10 productores, validar calidad, rutas y primeros clientes.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-brand-yellow text-brand-green flex items-center justify-center font-bold text-sm shrink-0">2</div>
+                                <div class="w-0.5 h-full bg-gray-300 my-2"></div>
+                            </div>
+                            <div class="pb-4">
+                                <h4 class="font-bold text-brand-green text-lg">Consolidación <span class="text-sm font-normal text-gray-500 ml-2">(4 a 8 meses)</span></h4>
+                                <p class="text-sm text-gray-600 mt-1">Crear marca, empaques, calendario y convenios con negocios locales.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-8 h-8 rounded-full bg-brand-green text-white flex items-center justify-center font-bold text-sm shrink-0">3</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-green text-lg">Expansión Municipal <span class="text-sm font-normal text-gray-500 ml-2">(9+ meses)</span></h4>
+                                <p class="text-sm text-gray-600 mt-1">Más productores, nuevas rutas y mayor disponibilidad de alimento local.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-lg border-t-8 border-brand-green fade-in-up" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-serif font-bold text-brand-green mb-6 border-b pb-4">Indicadores de Impacto</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-chart-line-up text-brand-terracotta text-xl mt-1"></i>
+                            <div>
+                                <strong class="block text-gray-800">Crecimiento Económico</strong>
+                                <span class="text-sm text-gray-600">Ingreso mensual promedio adicional por familia participante.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-users text-brand-yellow text-xl mt-1"></i>
+                            <div>
+                                <strong class="block text-gray-800">Inclusión Social</strong>
+                                <span class="text-sm text-gray-600">Número de mujeres, jóvenes y adultos mayores participando activamente.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-egg text-brand-green text-xl mt-1"></i>
+                            <div>
+                                <strong class="block text-gray-800">Abasto Comunitario</strong>
+                                <span class="text-sm text-gray-600">Docenas de huevo comercializadas por semana en la red.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-graduation-cap text-brand-terracotta text-xl mt-1"></i>
+                            <div>
+                                <strong class="block text-gray-800">Desarrollo de Capacidades</strong>
+                                <span class="text-sm text-gray-600">Número de capacitaciones realizadas y mejoras aplicadas.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer id="contacto" class="bg-brand-green pt-20 pb-10 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+                
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="Gemini_Generated_Image_jxhnvnjxhnvnjxhn.png" alt="Logo Huevo Digno" class="h-12 w-auto bg-white rounded-full p-1" onerror="this.src='https://images.unsplash.com/photo-1598935838597-48f572a818ec?auto=format&fit=crop&w=100&q=80'">
+                        <span class="font-bold text-2xl uppercase tracking-wide text-brand-yellow">Huevo Digno</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-sm">
+                        Generar cambio no requiere empezar con una empresa grande; inicia con una red pequeña, organizada y con una promesa de valor clara.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-green transition-colors">
+                            <i class="ph ph-whatsapp text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-green transition-colors">
+                            <i class="ph ph-instagram-logo text-xl"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-green transition-colors">
+                            <i class="ph ph-facebook-logo text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-brand-yellow">Enlaces Rápidos</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><a href="#inicio" class="hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="#nosotros" class="hover:text-white transition-colors">El Proyecto</a></li>
+                        <li><a href="#modelo" class="hover:text-white transition-colors">Modelo Inclusivo</a></li>
+                        <li><a href="#impacto" class="hover:text-white transition-colors">Impacto Social</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-brand-yellow">Súmate a la red</h4>
+                    <p class="text-gray-300 mb-4 text-sm">¿Eres productor, tienes una tienda o quieres consumir huevo local?</p>
+                    <button class="w-full bg-brand-terracotta text-white py-3 rounded-lg font-semibold hover:bg-white hover:text-brand-terracotta transition-colors">
+                        Contáctanos
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>&copy; 2026 Huevo Digno. Red de Aves Comunitaria. Todos los derechos reservados.</p>
+                <p class="mt-2 md:mt-0">Diseñado para compartir.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Javascript para interactividad y Carruseles -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Navbar Scroll Effect & Mobile Menu ---
+            const navbar = document.getElementById('navbar');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md', 'py-0');
+                    navbar.classList.remove('py-2');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.add('py-2');
+                }
+            });
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- Carrusel 1: Hero Fade Background ---
+            const heroSlides = document.querySelectorAll('.hero-slide');
+            let currentHeroSlide = 0;
+
+            function nextHeroSlide() {
+                heroSlides[currentHeroSlide].classList.remove('opacity-100');
+                heroSlides[currentHeroSlide].classList.add('opacity-0');
+                
+                currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+                
+                heroSlides[currentHeroSlide].classList.remove('opacity-0');
+                heroSlides[currentHeroSlide].classList.add('opacity-100');
+            }
+
+            // Cambiar imagen cada 5 segundos
+            setInterval(nextHeroSlide, 5000);
+
+
+            // --- Carrusel 2: Galería Horizontal ---
+            const galleryTrack = document.getElementById('gallery-track');
+            const prevGalleryBtn = document.getElementById('prev-gallery');
+            const nextGalleryBtn = document.getElementById('next-gallery');
+            
+            // Calcular cuánto desplazar (ancho del item + gap)
+            const getScrollAmount = () => {
+                const item = galleryTrack.querySelector('.gallery-item');
+                return item ? item.offsetWidth + 24 : 300; // 24px es el gap-6 de Tailwind
+            };
+
+            nextGalleryBtn.addEventListener('click', () => {
+                galleryTrack.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
+
+            prevGalleryBtn.addEventListener('click', () => {
+                galleryTrack.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            });
+
+
+            // --- Animaciones on Scroll (Fade in up) ---
+            const fadeElements = document.querySelectorAll('.fade-in-up');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Animación ocurre solo una vez
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
